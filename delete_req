@@ -106,9 +106,9 @@
 
 				request.onreadystatechange = function () {
 					if (request.readyState === 4) {
-					   token = JSON.parse(request.responseText);
-					   console.log(typeof(token));
-					   console.log(token.access_token);
+					   token = JSON.parse(request.responseText).access_token;
+					   console.log(typeof(token));  ///{"detail":"Could not validate credentials"}
+					   console.log(token);
 					   //document.getElementById("form-response").innerHTML = token["access_token"];
 					}
 				};
@@ -144,20 +144,22 @@
 					}
 				};*/
 				
-			$.ajax({
-			   url: 'https://travellerng.herokuapp.com/https://su16oe.deta.dev/user/',
-			   type: 'GET',
-			   contentType: 'application/json'
-			   headers: {
-				  'Authorization': 'Bearer <token>'
-			   },
-			   success: function (result) {
-				   // CallBack(result);
-			   },
-			   error: function (error) {
+			var url = 'https://travellerng.herokuapp.com/https://su16oe.deta.dev/user/';
 
-			   }
-			});
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url);
+
+			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Authorization", "Bearer token");
+
+			xhr.onreadystatechange = function () {
+			   if (xhr.readyState === 4) {
+				  console.log(xhr.status);
+				  console.log(xhr.responseText);
+			   }};
+
+			xhr.send();
+
 				
 			
 			/*
